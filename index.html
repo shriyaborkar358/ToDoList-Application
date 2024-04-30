@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList Application</title>
+
+    <style>
+        .heading {
+            text-align: center;
+            color: #3c083c;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .list-item {
+            background-color: rgb(195, 177, 192);
+            width: 450px;
+            height: 400px;
+            overflow-y: scroll;
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            border: 5px;
+        }
+
+        .action-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .input-todo {
+            background-color: rgb(195, 177, 192);
+            border-radius: 30px;
+            border: 1px solid black;
+            margin: 5px 10px;
+            font-size: 20px;
+            padding: 7px 40px;
+        }
+
+        .btn {
+            background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(100, 43, 115, 1) 0%, rgba(4, 0, 4, 1) 90%);
+            height: 35px;
+            width: 70px;
+            margin: 5px 15px;
+            font-size: 20px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: white;
+            border-radius: 30px;
+            border: 1px solid #230223;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            box-shadow: 1px 1px 1px #330033;
+        }
+
+        .todo-item {
+            background-color: rgb(230, 229, 234);
+            padding: 5px 20px;
+            font-size: 20px;
+            border-radius: 30px;
+            color: #330033;
+            margin: 10px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <h1 class="heading">ToDoList Application</h1>
+    
+    <div class="list-item" id="list-item">
+    </div>
+    
+    <div class="action-container">
+        <input type="text" id="input-todo" class="input-todo" />
+        <button class="btn" onclick="add()">Add</button>
+    </div>
+    
+    <script>
+        let todoList = [];
+
+        const listFromLOcalStorage = localStorage.getItem("todoList");
+        if(listFromLOcalStorage){
+            todoList = JSON.parse(listFromLOcalStorage);
+            renderToDoList()
+        }
+
+
+        function add() {
+            const inputElement = document.getElementById("input-todo");
+            todoList.push(inputElement.value);
+
+            localStorage.setItem("todoList", JSON.stringify(todoList));
+            inputElement.value = "";
+
+            renderToDoList();
+        }
+
+
+        function renderToDoList() {
+            const listItem = document.getElementById("list-item");
+            listItem.innerHTML = "";
+
+            for (const todoItem of todoList) {
+                listItem.innerHTML += `<div class="todo-item">
+                  <input type = "checkbox"  />
+                  ${todoItem}
+                </div>`;
+            }
+        }
+    </script>
+</body>
+
+</html>
